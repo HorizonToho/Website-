@@ -1,0 +1,45 @@
+* { font-family: 'Prompt', sans-serif; }
+.card-stack { perspective: 1000px; }
+.swipe-card {
+  transition: transform 0.4s ease, opacity 0.4s ease;
+  transform-origin: center bottom;
+}
+.swipe-left { transform: translateX(-120%) rotate(-15deg); opacity: 0; }
+.swipe-right { transform: translateX(120%) rotate(15deg); opacity: 0; }
+.gacha-spin { animation: gachaSpin 0.6s ease-out; }
+@keyframes gachaSpin {
+  0% { transform: scale(0.3) rotate(-180deg); opacity: 0; }
+  60% { transform: scale(1.1) rotate(10deg); opacity: 1; }
+  100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+.float-anim { animation: float 3s ease-in-out infinite; }
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+.shimmer {
+  background: linear-gradient(90deg, transparent 30%, rgba(255,215,0,0.3) 50%, transparent 70%);
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
+}
+.rarity-N { border-color: #9ca3af; }
+.rarity-R { border-color: #60a5fa; }
+.rarity-SR { border-color: #a78bfa; }
+.rarity-SSR { border-color: #fbbf24; box-shadow: 0 0 20px rgba(251,191,36,0.4); }
+.petal {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background: rgba(255,182,193,0.6);
+  border-radius: 50% 0 50% 0;
+  animation: petalFall 4s linear infinite;
+}
+@keyframes petalFall {
+  0% { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(100px) rotate(360deg); opacity: 0; }
+}
+body { box-sizing: border-box; }
