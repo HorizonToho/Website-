@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>เลือกกลุ่มสาระ - โหวตครูดีในดวงใจ</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="h-full">
+  <div class="max-w-lg mx-auto px-4 py-12 text-center">
+    <h1 class="text-2xl font-semibold text-gray-800 mb-4">เลือกกลุ่มสาระการเรียนรู้</h1>
+    <p class="text-sm text-gray-500 mb-6">เลือกเพื่อกรองครูที่แสดงผล (ฟังก์ชันตัวอย่าง)</p>
+    <div class="grid grid-cols-2 gap-3">
+      <button class="btn-full" onclick="selectGroup('ศิลปะ')"><i data-lucide="palette" class="w-4 h-4 inline mr-2"></i> ศิลปะ</button>
+      <button class="btn-full" onclick="selectGroup('คณิตศาสตร์')"><i data-lucide="calculator" class="w-4 h-4 inline mr-2"></i> คณิตศาสตร์</button>
+      <button class="btn-full" onclick="selectGroup('ภาษาไทย')"><i data-lucide="book-open" class="w-4 h-4 inline mr-2"></i> ภาษาไทย</button>
+      <button class="btn-full" onclick="selectGroup('วิทยาศาสตร์')"><i data-lucide="beaker" class="w-4 h-4 inline mr-2"></i> วิทยาศาสตร์</button>
+      <button class="btn-full" onclick="selectGroup('ภาษาต่างประเทศ')"><i data-lucide="globe" class="w-4 h-4 inline mr-2"></i> ภาษาต่างประเทศ</button>
+      <button class="btn-full" onclick="selectGroup('สุขศึกษาและพลศึกษา')"><i data-lucide="activity" class="w-4 h-4 inline mr-2"></i> สุขศึกษาและพลศึกษา</button>
+      <button class="btn-full" onclick="selectGroup('สังคมศึกษา')"><i data-lucide="users" class="w-4 h-4 inline mr-2"></i> สังคมศึกษา</button>
+      <button class="btn-full" onclick="selectGroup('แนะแนว')"><i data-lucide="compass" class="w-4 h-4 inline mr-2"></i> แนะแนว</button>
+      <button class="btn-full" onclick="selectGroup('การงานอาชีพ')"><i data-lucide="briefcase" class="w-4 h-4 inline mr-2"></i> การงานอาชีพ</button>
+      <button class="btn-full" onclick="selectGroup('ฝ่ายบริหาร')"><i data-lucide="user-check" class="w-4 h-4 inline mr-2"></i> ฝ่ายบริหาร</button>
+    </div>
+    <div class="mt-6">
+      <a href="menu.html" class="text-sm text-pink-400">กลับไปเมนู</a>
+    </div>
+  </div>
+  <script>
+    function selectGroup(name) {
+      localStorage.setItem('selected_group', name);
+      alert('เลือกกลุ่ม: ' + name + ' (กลับไปหน้าโหวตเพื่อดูผล)');
+      location.href = 'index.html#vote';
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      if (window.lucide && typeof window.lucide.createIcons === 'function') {
+        window.lucide.createIcons();
+      }
+    });
+  </script>
+</body>
+</html>
