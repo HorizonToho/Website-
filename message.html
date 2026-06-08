@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="th" class="h-full">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ฝากข้อความ - โหวตครูดีในดวงใจ</title>
+  <script src="tailwind-config.js"></script>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+  <script src="lucide-fallback.js"></script>
+  <script src="/_sdk/data_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="h-full">
+  <div class="max-w-lg mx-auto px-4 py-12 text-center">
+    <h1 class="text-3xl font-bold text-pink-600 mb-4">ฝากข้อความถึงครู</h1>
+    <p class="text-sm text-pink-400 mb-6">เขียนข้อความถึงคุณครูที่คุณชื่นชอบ</p>
+    <div class="bg-white rounded-3xl shadow-lg p-6 border border-pink-100 text-left">
+      <div class="flex items-center gap-2 mb-4"><i data-lucide="pen-tool" class="w-5 h-5 text-pink-400"></i><h2 class="text-lg font-semibold text-gray-800">ฟอร์มฝากข้อความ</h2></div>
+      <div class="mb-4">
+        <label for="msg-teacher" class="block text-sm text-gray-600 mb-1">เลือกครูที่ต้องการส่งข้อความ</label>
+        <select id="msg-teacher" class="w-full px-4 py-2.5 rounded-xl border border-pink-200 text-sm focus:outline-none focus:ring-2 focus:ring-pink-300 bg-pink-50/50"></select>
+      </div>
+      <div class="mb-4">
+        <label for="msg-name" class="block text-sm text-gray-600 mb-1">ชื่อผู้ส่ง (ไม่ระบุก็ได้)</label>
+        <input type="text" id="msg-name" placeholder="นักเรียนผู้น่ารัก" class="w-full px-4 py-2.5 rounded-xl border border-pink-200 text-sm focus:outline-none focus:ring-2 focus:ring-pink-300 bg-pink-50/50">
+      </div>
+      <div class="mb-4">
+        <label for="msg-text" class="block text-sm text-gray-600 mb-1">ข้อความถึงครู</label>
+        <textarea id="msg-text" rows="4" placeholder="เขียนข้อความรัก ๆ ถึงครูที่นี่..." class="w-full px-4 py-3 rounded-xl border border-pink-200 text-sm focus:outline-none focus:ring-2 focus:ring-pink-300 bg-pink-50/50 resize-none"></textarea>
+      </div>
+      <button onclick="sendMessage()" id="send-msg-btn" class="w-full py-3 bg-gradient-to-r from-pink-400 to-pink-500 text-white rounded-xl font-medium shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2"><i data-lucide="send" class="w-4 h-4"></i> ส่งข้อความ</button>
+      <div id="msg-success" class="hidden mt-3 text-center text-sm text-green-600 bg-green-50 rounded-xl py-2"><i data-lucide="check-circle" class="w-4 h-4 inline"></i> ส่งข้อความสำเร็จแล้ว!</div>
+      <div id="msg-error" class="hidden mt-3 text-center text-sm text-red-600 bg-red-50 rounded-xl py-2"><i data-lucide="x-circle" class="w-4 h-4 inline"></i> เกิดข้อผิดพลาด กรุณาลองใหม่</div>
+    </div>
+    <div class="mt-6 flex justify-between text-sm text-pink-400">
+      <a href="menu.html">กลับไปเมนู</a>
+      <a href="index.html">กลับหน้าแรก</a>
+    </div>
+  </div>
+  <script>
+    const teachers = [
+      { id: 't1', name: 'ครูสมศรี ใจดี' },
+      { id: 't2', name: 'ครูประยุทธ์ วิชาดี' },
+      { id: 't3', name: 'ครูมาลี รักเรียน' },
+      { id: 't4', name: 'ครูสมชาย ศิลป์สวย' },
+      { id: 't5', name: 'ครูวิภา อังกฤษเก่ง' },
+      { id: 't6', name: 'ครูธนพล กีฬาเด่น' }
+    ];
+    const sel = document.getElementById('msg-teacher');
+    teachers.forEach(t => {
+      const o = document.createElement('option');
+      o.value = t.id;
+      o.textContent = t.name;
+      sel.appendChild(o);
+    });
+
+    function showToast(id) {
+      document.getElementById('msg-success').classList.add('hidden');
+      document.getElementById('msg-error').classList.add('hidden');
+      document.getElementById(id).classList.remove('hidden');
+      setTimeout(() => document.getElementById(id).classList.add('hidden'), 3000);
+    }
+
+    async function sendMessage() {
+      const teacherId = sel.value;
+      const name = document.getElementById('msg-name').value || 'นักเรียนนิรนาม';
+      const msg = document.getElementById('msg-text').value.trim();
+      if (!msg) { showToast('msg-error'); return; }
+      const btn = document.getElementById('send-msg-btn');
+      btn.disabled = true;
+      btn.textContent = 'กำลังส่ง...';
+      const result = await window.dataSdk.create({ teacher_id: teacherId, vote_count: 0, message: msg, student_name: name, created_at: new Date().toISOString() });
+      btn.disabled = false;
+      btn.innerHTML = '<i data-lucide="send" class="w-4 h-4"></i> ส่งข้อความ';
+      if (result && result.isOk) {
+        document.getElementById('msg-text').value = '';
+        showToast('msg-success');
+      } else {
+        showToast('msg-error');
+      }
+      window.lucide && window.lucide.createIcons && window.lucide.createIcons();
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      window.lucide && window.lucide.createIcons && window.lucide.createIcons();
+    });
+  </script>
+</body>
+</html>
