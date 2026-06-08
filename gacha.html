@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="th" class="h-full">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>สุ่มกาชา - โหวตครูดีในดวงใจ</title>
+  <script src="tailwind-config.js"></script>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+  <script src="lucide-fallback.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="h-full">
+  <div class="max-w-lg mx-auto px-4 py-12 text-center">
+    <h1 class="text-3xl font-bold text-pink-600 mb-4">สุ่มกาชา</h1>
+    <p class="text-sm text-pink-400 mb-6">ลุ้นรับการ์ดครูระดับพิเศษ</p>
+    <div class="bg-white rounded-3xl shadow-lg p-6 border border-pink-100 text-center">
+      <div class="flex items-center justify-center gap-2 mb-4"><i data-lucide="sparkles" class="w-5 h-5 text-yellow-400"></i><h2 class="text-lg font-semibold text-gray-800">สุ่มกาชาการ์ดครู</h2><i data-lucide="sparkles" class="w-5 h-5 text-yellow-400"></i></div>
+      <p class="text-xs text-gray-500 mb-5">ลุ้นรับการ์ดครูระดับพิเศษ! N, R, SR, SSR</p>
+      <div class="flex justify-center gap-3 mb-5">
+        <div class="text-center">
+          <div class="w-10 h-10 rounded-lg border-2 rarity-N flex items-center justify-center text-xs font-bold text-gray-500">N</div>
+          <span class="text-[10px] text-gray-400">ปกติ</span>
+        </div>
+        <div class="text-center">
+          <div class="w-10 h-10 rounded-lg border-2 rarity-R flex items-center justify-center text-xs font-bold text-blue-500">R</div>
+          <span class="text-[10px] text-gray-400">หายาก</span>
+        </div>
+        <div class="text-center">
+          <div class="w-10 h-10 rounded-lg border-2 rarity-SR flex items-center justify-center text-xs font-bold text-purple-500">SR</div>
+          <span class="text-[10px] text-gray-400">พิเศษ</span>
+        </div>
+        <div class="text-center">
+          <div class="w-10 h-10 rounded-lg border-2 rarity-SSR flex items-center justify-center text-xs font-bold text-yellow-500 shimmer">SSR</div>
+          <span class="text-[10px] text-gray-400">ตำนาน</span>
+        </div>
+      </div>
+      <div id="gacha-result" class="hidden mb-5">
+        <div id="gacha-card" class="mx-auto w-48 h-64 rounded-2xl border-4 flex flex-col items-center justify-center p-4 bg-gradient-to-b from-white to-pink-50 gacha-spin">
+          <div class="w-16 h-16 rounded-full bg-pink-100 flex items-center justify-center mb-3"><i data-lucide="user" class="w-8 h-8 text-pink-400"></i></div>
+          <p id="gacha-rarity" class="text-xs font-bold mb-1">SSR</p>
+          <p id="gacha-name" class="text-sm font-semibold text-gray-800">ครูสมศรี</p>
+          <p id="gacha-subj" class="text-[10px] text-gray-500">ภาษาไทย</p>
+        </div>
+      </div>
+      <button onclick="pullGacha()" id="gacha-btn" class="px-8 py-3 bg-gradient-to-r from-yellow-400 to-pink-400 text-white rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all hover:scale-105"><i data-lucide="gift" class="w-5 h-5 inline mr-1"></i> สุ่มกาชา!</button>
+    </div>
+    <div class="mt-6 flex justify-between text-sm text-pink-400">
+      <a href="menu.html">กลับไปเมนู</a>
+      <a href="collection.html">ไปหน้าการ์ดสะสม</a>
+    </div>
+  </div>
+  <script>
+    const teachers = [
+      { id: 't1', name: 'ครูสมศรี ใจดี', subject: 'กลุ่มสาระภาษาไทย' },
+      { id: 't2', name: 'ครูประยุทธ์ วิชาดี', subject: 'กลุ่มสาระคณิตศาสตร์' },
+      { id: 't3', name: 'ครูมาลี รักเรียน', subject: 'กลุ่มสาระวิทยาศาสตร์' },
+      { id: 't4', name: 'ครูสมชาย ศิลป์สวย', subject: 'กลุ่มสาระศิลปะ' },
+      { id: 't5', name: 'ครูวิภา อังกฤษเก่ง', subject: 'กลุ่มสาระภาษาต่างประเทศ' },
+      { id: 't6', name: 'ครูธนพล กีฬาเด่น', subject: 'กลุ่มสาระสุขศึกษา' }
+    ];
+    let collection = JSON.parse(localStorage.getItem('gacha_collection') || '[]');
+
+    function pullGacha() {
+      const rarities = [{r:'N',w:50},{r:'R',w:30},{r:'SR',w:15},{r:'SSR',w:5}];
+      const roll = Math.random() * 100;
+      let cum = 0, rarity = 'N';
+      for (const rv of rarities) { cum += rv.w; if (roll < cum) { rarity = rv.r; break; } }
+      const t = teachers[Math.floor(Math.random() * teachers.length)];
+      const card = { rarity, teacher: t };
+      collection.push(card);
+      localStorage.setItem('gacha_collection', JSON.stringify(collection));
+
+      const gc = document.getElementById('gacha-card');
+      gc.className = `mx-auto w-48 h-64 rounded-2xl border-4 flex flex-col items-center justify-center p-4 bg-gradient-to-b from-white to-pink-50 gacha-spin rarity-${rarity}`;
+      document.getElementById('gacha-rarity').textContent = rarity;
+      document.getElementById('gacha-rarity').className = `text-xs font-bold mb-1 ${rarity === 'SSR' ? 'text-yellow-500' : rarity === 'SR' ? 'text-purple-500' : rarity === 'R' ? 'text-blue-500' : 'text-gray-500'}`;
+      document.getElementById('gacha-name').textContent = t.name;
+      document.getElementById('gacha-subj').textContent = t.subject;
+      document.getElementById('gacha-result').classList.remove('hidden');
+      gc.style.animation = 'none';
+      gc.offsetHeight;
+      gc.style.animation = '';
+      window.lucide && window.lucide.createIcons && window.lucide.createIcons();
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      window.lucide && window.lucide.createIcons && window.lucide.createIcons();
+    });
+  </script>
+</body>
+</html>
