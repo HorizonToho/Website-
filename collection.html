@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="th" class="h-full">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>การ์ดสะสม - โหวตครูดีในดวงใจ</title>
+  <script src="tailwind-config.js"></script>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+  <script src="lucide-fallback.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="h-full">
+  <div class="max-w-lg mx-auto px-4 py-12 text-center">
+    <h1 class="text-3xl font-bold text-pink-600 mb-4">การ์ดสะสม</h1>
+    <p class="text-sm text-pink-400 mb-6">ชมการ์ดครูที่คุณได้จากการสุ่มกาชา</p>
+    <div class="bg-white rounded-3xl shadow-lg p-6 border border-pink-100">
+      <div class="flex items-center gap-2 mb-4"><i data-lucide="layout-grid" class="w-5 h-5 text-pink-400"></i><h2 class="text-lg font-semibold text-gray-800">คอลเลกชันของคุณ</h2></div>
+      <div id="collection-grid" class="grid grid-cols-3 gap-3"></div>
+    </div>
+    <div class="mt-6 flex justify-between text-sm text-pink-400">
+      <a href="menu.html">กลับไปเมนู</a>
+      <a href="gacha.html">กลับไปสุ่มกาชา</a>
+    </div>
+  </div>
+  <script>
+    function renderCollection() {
+      const collection = JSON.parse(localStorage.getItem('gacha_collection') || '[]');
+      const grid = document.getElementById('collection-grid');
+      if (collection.length === 0) {
+        grid.innerHTML = '<div class="text-center text-xs text-gray-400 col-span-3 py-8"><i data-lucide="inbox" class="w-8 h-8 mx-auto text-gray-300 mb-2"></i> ยังไม่มีการ์ดสะสม<br>ลองสุ่มกาชาดูสิ!</div>';
+        window.lucide && window.lucide.createIcons && window.lucide.createIcons();
+        return;
+      }
+      grid.innerHTML = collection.map(c => `
+        <div class="rounded-xl border-2 rarity-${c.rarity} p-2 text-center bg-gradient-to-b from-white to-pink-50">
+          <div class="w-10 h-10 mx-auto rounded-full bg-pink-100 flex items-center justify-center mb-1"><i data-lucide="user" class="w-5 h-5 text-pink-400"></i></div>
+          <p class="text-[10px] font-bold ${c.rarity === 'SSR' ? 'text-yellow-500' : c.rarity === 'SR' ? 'text-purple-500' : c.rarity === 'R' ? 'text-blue-500' : 'text-gray-500'}">${c.rarity}</p>
+          <p class="text-[10px] text-gray-700 truncate">${c.teacher.name}</p>
+        </div>
+      `).join('');
+      window.lucide && window.lucide.createIcons && window.lucide.createIcons();
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      renderCollection();
+      window.lucide && window.lucide.createIcons && window.lucide.createIcons();
+    });
+  </script>
+</body>
+</html>
