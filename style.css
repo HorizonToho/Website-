@@ -43,3 +43,87 @@
   100% { transform: translateY(100px) rotate(360deg); opacity: 0; }
 }
 body { box-sizing: border-box; }
+
+.icon {
+  width: 28px;
+  height: 28px;
+}
+
+.icon-sm {
+  width: 18px;
+  height: 18px;
+}
+
+.btn-circle {
+  width: 60px;
+  height: 60px;
+  border-radius: 999px;
+  background: white;
+  border: 2px solid #fbcfe8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.2s;
+}
+
+.btn-circle:hover {
+  transform: scale(1.1);
+  background: #fff1f2;
+}
+
+.btn-full {
+  width: 100%;
+  padding: 12px;
+  border-radius: 12px;
+  background: linear-gradient(90deg, #f472b6, #ec4899);
+  color: white;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.btn-gacha {
+  padding: 12px 24px;
+  border-radius: 12px;
+  background: linear-gradient(90deg, #facc15, #f472b6);
+  color: white;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+svg.lucide,
+svg[data-lucide] {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  vertical-align: middle;
+}
+
+svg.lucide path,
+svg.lucide line,
+svg.lucide circle,
+svg.lucide rect,
+svg.lucide polygon {
+  stroke: currentColor;
+}
+
+.lucide,
+svg[data-lucide] {
+  display: inline-block;
+  vertical-align: middle;
+  color: inherit;
+}
+
+.lucide path,
+.lucide line,
+.lucide polyline,
+.lucide circle,
+.lucide rect,
+.lucide polygon {
+  stroke: currentColor;
+}
