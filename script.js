@@ -260,7 +260,9 @@ window.elementSdk.init({
 });
 
 (async () => {
+  if (window.dataSdk) {
   await window.dataSdk.init(dataHandler);
+}
   displayTeacher(0);
   renderCollection();
   createLucideIcons();
@@ -298,4 +300,14 @@ async function voteTeacher() {
     displayTeacher(currentTeacherIdx);
     voting = false;
   }, 500);
+}
+
+if (window.elementSdk) {
+  window.elementSdk.init({
+    defaultConfig,
+    onConfigChange: async (config) => {
+      document.getElementById('site-title').textContent = config.site_title || defaultConfig.site_title;
+      document.getElementById('tagline').textContent = config.tagline || defaultConfig.tagline;
+    }
+  });
 }
