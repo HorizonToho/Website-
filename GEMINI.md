@@ -2,7 +2,7 @@
 
 ## Branding & Visual Identity
 - **Institution:** Bangsaphan Wittaya School (โรงเรียนบางสะพานวิทยา)
-- **Primary Colors:** Green and Yellow (เขียว-เหลือง)
+- **Primary Colors:** Pink (ชมพู)
   - Green (Primary): #15803d
   - Yellow (Accent): #facc15
 - **Theme:** Professional, educational, and modern.
