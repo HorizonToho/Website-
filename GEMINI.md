@@ -1,4 +1,4 @@
-# Project Instructions: Student Voting System (BSPWIT)
+# Project Instructions: Teacher Voting System (BSPWIT)
 
 ## Branding & Visual Identity
 - **Institution:** Bangsaphan Wittaya School (โรงเรียนบางสะพานวิทยา)
